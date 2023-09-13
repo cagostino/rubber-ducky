@@ -1,7 +1,9 @@
 # Rubber Ducky Bot
 
 ## Description
-The Rubber Ducky Bot is a Python script designed to build a consensus between the chat bot and the user on a list of questions through a conversation using the llama_cpp_python server. The bot continually refines the user's answers until a consensus is reached. This is particularly useful for fleshing out ideas or generating refined answers for complex topics.
+When you need to work through a problem, it can help to explain the problem to a rubber duck.
+!(rubber-ducky.jpg)
+It would be nice in some cases if the rubber duck could talk back and suggest things that you might have missed or not thought of. The Rubber Ducky Bot is a Python script designed to iterate on ideas or solutions to certain questions through a conversation between the user and a chat bot, using the llama_cpp_python server. The bot continually refines the user's answers until a consensus is reached. This is particularly useful for fleshing out ideas or generating simple, refined answers for complex topics.
 
 ## Prerequisites
 
@@ -47,4 +49,4 @@ Questions are listed line-by-line under the `[questions]` heading.
 - `integrate_and_summarize(conversation, original_answer, new_info)`: Integrates and summarizes the original and new answers.
 - `evaluate_consensus(refined_answer)`: Evaluates whether the user agrees with the refined answer.
 - `consensus_bot(questions)`: Main function to initiate the conversation and build consensus.
-# consensus-bot
+
