@@ -2,7 +2,10 @@
 
 ## Description
 When you need to work through a problem, it can help to explain the problem to a rubber duck.
+
 ![github-small](rubber-ducky.jpg)
+
+
 It would be nice in some cases if the rubber duck could talk back and suggest things that you might have missed or not thought of. The Rubber Ducky Bot is a Python script designed to iterate on ideas or solutions to certain questions through a conversation between the user and a chat bot, using the llama_cpp_python server. The bot continually refines the user's answers until a consensus is reached. This is particularly useful for fleshing out ideas or generating simple, refined answers for complex topics.
 
 ## Prerequisites
