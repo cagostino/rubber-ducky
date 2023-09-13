@@ -12,8 +12,8 @@ The Consensus Bot is a Python script designed to build a consensus between the c
 ## Installation
 Clone the repository and navigate to the directory:
 ```bash
-git clone https://github.com/cagostino/consensus-bot.git
-cd consensus-bot
+git clone https://github.com/cagostino/rubber-ducky.git
+cd rubber-ducky
 ```
 
 Install the `requests` library:
@@ -26,7 +26,7 @@ pip install requests
 Run the script with the `.md` file containing the list of questions:
 
 ```bash
-python consensus_bot.py --file questions.md
+python rubber_ducky.py --file questions.md
 ```
 
 ### Question File Format
