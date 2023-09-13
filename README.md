@@ -1,4 +1,4 @@
-# Consensus Bot
+# Rubber Ducky Bot
 
 ## Description
 The Consensus Bot is a Python script designed to build a consensus between the chat bot and the user on a list of questions through a conversation using the llama_cpp_python server. The bot continually refines the user's answers until a consensus is reached. This is particularly useful for fleshing out ideas or generating refined answers for complex topics.
