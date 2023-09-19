@@ -33,17 +33,27 @@ def generate_critique(conversation, section, answer):
     critique = query_local_llama_server(conversation + [{"content": prompt, "role": "user"}])
     return critique
 
-def integrate_and_summarize(conversation, original_answer, new_info):
-    prompt = f"Integrate and summarize the original answer '{original_answer}' with new information '{new_info}'. Provide your response in the form of a summary where you say something similar to 'okay thank you, so if I'm understanding correctly, you mean [insert the summary]'  and then you'll ask the user if they agree with the state of the answer or if they want to refine it further. Do not include any sort of 'thank you or cordiality' within the summary"
+def integrate_and_summarize(conversation, original_answer, response, new_info):
+    prompt = f"""Please follow these steps:
+    
+    1. Integrate and summarize the original answer: '{original_answer}' with your previous response: '{response}' and the new information:  '{new_info}'. 
+    2. Provide your response in the form of a summary When writing your answer, do not act cordially. Instead, speak plainly as if you are talking to a friend. Respond in the form "So to summarize, [insert your response here]" 
+    
+    3. Finally, ask the user if they would like to continue discussing the topic. 
+
+    """
     refined_answer = query_local_llama_server(conversation + [{"content": prompt, "role": "user"}])
     return refined_answer
 
 def evaluate_consensus(refined_answer):
-    return input('LLM: '+f"Do you agree with the refined answer: '{refined_answer}'? (y/n) \n")
+    return input('LLM: '+f"'{refined_answer}'? (y/n) \n")
 
 def consensus_bot(questions):
     answers = {}
-    conversation = [{"content": "You are a consensus-building assistant.", "role": "system"}]
+    conversation = [{"content": """You are a an assistant which provides valuable criticism about a user's ideas. 
+            You are to answer plainly and to use standard punctuation. Do not include additional cordialities.
+                
+                     """, "role": "system"}]
 
     for section, question in questions.items():
         print(f"\nLet's discuss {section}.\n")
@@ -51,19 +61,20 @@ def consensus_bot(questions):
         conversation.append({"content": question, "role": "assistant"})
         conversation.append({"content": initial_answer, "role": "user"})
         
-        agree = 'n'
-        while agree.lower() != 'y':
+        agree = 'y'
+        while agree.lower() != 'n':
             critique = generate_critique(conversation, section, initial_answer)
+            #conversation.append({"content": critique, "role": "assistant"})
+
             new_info = input('LLM: ' + critique+'\n User: ')
-            conversation.append({"content": critique, "role": "assistant"})
             conversation.append({"content": new_info, "role": "user"})
             
-            refined_answer = integrate_and_summarize(conversation, initial_answer, new_info)
+            refined_answer = integrate_and_summarize(conversation, initial_answer,critique,  new_info)
             agree = evaluate_consensus(refined_answer)
             conversation.append({"content": refined_answer, "role": "assistant"})
             conversation.append({"content": agree, "role": "user"})
 
-            if agree.lower() != 'y':
+            if agree.lower() != 'n':
                 initial_answer = refined_answer
 
         answers[section] = refined_answer
